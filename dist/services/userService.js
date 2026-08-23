@@ -1,6 +1,7 @@
 import { userModel } from "../models/usermodel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+//functions
 const generateJWT = (data) => {
     return jwt.sign(data, "OfU/HmYEFUonlcL6gha0gTMFnCmqTyTKhP/GGr3Q69E=");
 };
