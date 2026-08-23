@@ -1,0 +1,21 @@
+        React frontend
+            │
+            │ HTTP request
+            ▼
+        Express / Route
+            │
+            ▼
+        Controller
+            │
+            ▼
+        Service
+    ┌─────────┴─────────┐
+    │                   │
+Business logic      Authentication
+    │                   │
+    └─────────┬─────────┘
+            ▼
+        Mongoose
+            │
+            ▼
+            MongoDB
