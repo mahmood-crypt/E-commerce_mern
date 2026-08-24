@@ -18,7 +18,7 @@ interface LoginParams {
 //functions
 
 const generateJWT = (data:any) => {
-    return jwt.sign(data,"OfU/HmYEFUonlcL6gha0gTMFnCmqTyTKhP/GGr3Q69E=",)
+    return jwt.sign(data,"OfU/HmYEFUonlcL6gha0gTMFnCmqTyTKhP/GGr3Q69E=")
 }
 
 export const register = async ({firstName , lastName,email,password} : RegisterParams) => {
