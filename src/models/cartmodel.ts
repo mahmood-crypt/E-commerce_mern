@@ -3,7 +3,7 @@ import type { IProduct } from "./productmodel.js";
 
 const cartStatusEnum = ["active","completed"];
 
-interface CartItem extends Document {
+interface CartItem  {
     product : IProduct;
     unitPrice : number;
     quantity : number;
@@ -24,7 +24,7 @@ const cartItemSchema = new Schema<CartItem>({
 
 const cartSchema = new Schema<ICart>({
     userId : {type : Schema.Types.ObjectId , ref : "user",required : true},
-    items : {cartItemSchema},
+    items : [cartItemSchema],
     totalAmount : {type : Number , required : true},
     status : {type : String, enum : cartStatusEnum ,default : "active"}
 

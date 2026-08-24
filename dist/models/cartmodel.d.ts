@@ -1,6 +1,6 @@
 import mongoose, { Document, type ObjectId } from "mongoose";
 import type { IProduct } from "./productmodel.js";
-interface CartItem extends Document {
+interface CartItem {
     product: IProduct;
     unitPrice: number;
     quantity: number;
