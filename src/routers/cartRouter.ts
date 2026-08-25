@@ -1,5 +1,5 @@
 import express from "express"
-import { addItemToCart, clearCart, deleteItemFromCart, getActiveCartForUser, updateItemInCart } from "../services/cartService.js";
+import { addItemToCart, checkout, clearCart, deleteItemFromCart, getActiveCartForUser, updateItemInCart } from "../services/cartService.js";
 import validateJWT, { type globalRequest } from "../middlewares/validateJWT.js";
 
 const router = express.Router();
@@ -43,5 +43,14 @@ router.delete("/", validateJWT, async (req : globalRequest,res) => {
     res.status(statusCode).send(data);
 
 })
+
+router.post("/checkout", validateJWT, async (req : globalRequest,res) => {
+    const userId = req?.user?._id;
+    const {address} = req.body;
+    const {data,statusCode} = await checkout({userId,address});
+    res.status(statusCode).send(data);
+
+})
+
 
 export default router;

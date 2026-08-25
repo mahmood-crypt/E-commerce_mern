@@ -72,5 +72,22 @@ export declare const clearCart: (userId: string) => Promise<{
     };
     statusCode: number;
 }>;
+interface Checkout {
+    userId: string;
+    address: string;
+}
+export declare const checkout: ({ userId, address }: Checkout) => Promise<{
+    data: string;
+    statusCode: number;
+} | {
+    data: import("mongoose").Document<unknown, {}, import("../models/ordermodel.js").IOrder, {}, import("mongoose").DefaultSchemaOptions> & import("../models/ordermodel.js").IOrder & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    } & {
+        id: string;
+    };
+    statusCode: number;
+}>;
 export {};
 //# sourceMappingURL=cartService.d.ts.map
