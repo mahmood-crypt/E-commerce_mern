@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import userRouter from "./routers/userRoute.js";
@@ -10,7 +11,7 @@ app.use(express.json());
 const port = 3001;
 
 mongoose
-  .connect("mongodb://localhost:27017/e-commerce")
+  .connect(process.env.DATABASE_URL || "")
   .then(() => console.log("connected to Mongo"))
   .catch((err) => console.log("Failed to connect !",err));
 

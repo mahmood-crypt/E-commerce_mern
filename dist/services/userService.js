@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 //functions
 const generateJWT = (data) => {
-    return jwt.sign(data, "OfU/HmYEFUonlcL6gha0gTMFnCmqTyTKhP/GGr3Q69E=");
+    return jwt.sign(data, process.env.JWT_SECRET || "");
 };
 export const register = async ({ firstName, lastName, email, password }) => {
     const findUser = await userModel.findOne({ email });
