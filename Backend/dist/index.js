@@ -5,8 +5,10 @@ import userRouter from "./routers/userRoute.js";
 import { seedInitialProducts } from "./services/productService.js";
 import productRouter from "./routers/productRouter.js";
 import cartRouter from "./routers/cartRouter.js";
+import cors from "cors";
 const app = express();
 app.use(express.json());
+app.use(cors());
 const port = 3001;
 mongoose
     .connect(process.env.DATABASE_URL || "")

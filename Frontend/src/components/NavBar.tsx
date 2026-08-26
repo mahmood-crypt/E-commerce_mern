@@ -85,7 +85,7 @@ function Navbar() {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
