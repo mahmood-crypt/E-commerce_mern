@@ -20,7 +20,7 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] =
     useState<null | HTMLElement>(null);
 
-  const { username, isAuthenticated } = useContext(AuthContext);
+  const { username, isAuthenticated,logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (
@@ -127,7 +127,11 @@ function Navbar() {
 
                     <MenuItem
                       key="logout"
-                      onClick={handleCloseUserMenu}
+                      onClick={() => {
+                        logout();
+                        navigate("/");
+                        handleCloseUserMenu()
+                      }}
                     >
                       <Typography textAlign="center">
                         Log Out
