@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import {
   AppBar,
   Avatar,
+  Badge,
   Box,
   Button,
   Container,
@@ -13,10 +14,11 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { ShoppingCart } from "@mui/icons-material";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function NavBar() {
   const [anchorElUser, setAnchorElUser] =
     useState<null | HTMLElement>(null);
 
@@ -74,7 +76,15 @@ function Navbar() {
             </Box>
 
             {/* User section */}
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ display : "flex", flexDirection : "row" , alignItems : "center" , gap : 3 , flexGrow: 0 }}>
+              <IconButton aria-label="cart" onClick={() => {
+                navigate("/cart");
+              }}>
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCart  sx={{color : "white"}} />
+                </Badge>
+              </IconButton>
+
               {isAuthenticated ? (
                 <>
                   <Tooltip title="Open settings">
@@ -161,4 +171,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavBar;
