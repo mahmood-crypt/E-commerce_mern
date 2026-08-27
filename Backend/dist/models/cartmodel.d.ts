@@ -1,7 +1,7 @@
 import mongoose, { Document, type ObjectId } from "mongoose";
 import type { IProduct } from "./productmodel.js";
 interface CartItem {
-    product: IProduct;
+    product: mongoose.Types.ObjectId | IProduct;
     unitPrice: number;
     quantity: number;
 }

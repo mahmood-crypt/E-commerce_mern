@@ -15,14 +15,25 @@ interface DeletedItem {
 }
 interface GetActiveCartForUser {
     userId: string;
+    populateProduct?: boolean;
 }
-export declare const getActiveCartForUser: ({ userId, }: GetActiveCartForUser) => Promise<import("mongoose").Document<unknown, {}, ICart, {}, import("mongoose").DefaultSchemaOptions> & ICart & Required<{
+interface Checkout {
+    userId: string;
+    address: string;
+}
+/**
+ * Get user's active cart
+ */
+export declare const getActiveCartForUser: ({ userId, populateProduct, }: GetActiveCartForUser) => Promise<import("mongoose").Document<unknown, {}, ICart, {}, import("mongoose").DefaultSchemaOptions> & ICart & Required<{
     _id: import("mongoose").Types.ObjectId;
 }> & {
     __v: number;
 } & {
     id: string;
 }>;
+/**
+ * Add item to cart
+ */
 export declare const addItemToCart: ({ productId, quantity, userId, }: Additemtocart) => Promise<{
     data: string;
     statusCode: number;
@@ -36,7 +47,10 @@ export declare const addItemToCart: ({ productId, quantity, userId, }: Additemto
     };
     statusCode: number;
 }>;
-export declare const updateItemInCart: ({ userId, productId, quantity }: Updateitemincart) => Promise<{
+/**
+ * Update item quantity in cart
+ */
+export declare const updateItemInCart: ({ userId, productId, quantity, }: Updateitemincart) => Promise<{
     data: string;
     statusCode: number;
 } | {
@@ -49,7 +63,10 @@ export declare const updateItemInCart: ({ userId, productId, quantity }: Updatei
     };
     statusCode: number;
 }>;
-export declare const deleteItemFromCart: ({ userId, productId }: DeletedItem) => Promise<{
+/**
+ * Delete item from cart
+ */
+export declare const deleteItemFromCart: ({ userId, productId, }: DeletedItem) => Promise<{
     data: string;
     statusCode: number;
 } | {
@@ -62,6 +79,9 @@ export declare const deleteItemFromCart: ({ userId, productId }: DeletedItem) =>
     };
     statusCode: number;
 }>;
+/**
+ * Clear cart
+ */
 export declare const clearCart: (userId: string) => Promise<{
     data: import("mongoose").Document<unknown, {}, ICart, {}, import("mongoose").DefaultSchemaOptions> & ICart & Required<{
         _id: import("mongoose").Types.ObjectId;
@@ -72,11 +92,10 @@ export declare const clearCart: (userId: string) => Promise<{
     };
     statusCode: number;
 }>;
-interface Checkout {
-    userId: string;
-    address: string;
-}
-export declare const checkout: ({ userId, address }: Checkout) => Promise<{
+/**
+ * Checkout cart and create order
+ */
+export declare const checkout: ({ userId, address, }: Checkout) => Promise<{
     data: string;
     statusCode: number;
 } | {

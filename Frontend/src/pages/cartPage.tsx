@@ -1,16 +1,15 @@
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../constants/BaseUrl";
 import { useAuth } from "../context/AuthContext";
-import { data } from "react-router-dom";
+import { useCart } from "../context/cartContext";
 
 const CartPage = () => {
-
+    const {cartItems,totalAmount} = useCart()
     const {token} = useAuth()
-    const [cart,setCart] = useState();
     const [err,setErr] = useState("")
 
-    useEffect(() => {
+ /*   useEffect(() => {
         if(!token){
             return;
         }
@@ -37,10 +36,17 @@ const CartPage = () => {
         return <>{err}</>
     }
 
-    console.log({cart});
+    console.log({cart});*/
     return (
         <Container sx={{mt : 2}}>
             <Typography variant="h3">My Cart</Typography>
+            {cartItems.map((i) => {
+                return (
+                    <Box>
+                        {i.title}
+                    </Box>
+                )
+            })}
         </Container>
     )
 }
