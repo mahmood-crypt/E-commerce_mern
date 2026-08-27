@@ -6,22 +6,25 @@ import AuthProvidor from "./context/AuthProvider"
 import LoginPage from "./pages/LoginPage"
 import  CartPage  from "./pages/cartPage"
 import ProtectedRoute from "./components/ProtectedRoute"
+import CartProvidor from "./context/cartProvider"
 
 function App() {
 
   return (
     <AuthProvidor>
-      <BrowserRouter>
-      <NavBar />
-        <Routes>
-          <Route path="/" element = {<HomePage/>}/>
-          <Route path="/register" element = {<RegisterPage/>}/>
-          <Route path="/login" element = {<LoginPage/>}/>
-          <Route element = {<ProtectedRoute/>}>
-            <Route path="/cart" element = {<CartPage/>}/>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <CartProvidor>
+        <BrowserRouter>
+        <NavBar />
+          <Routes>
+            <Route path="/" element = {<HomePage/>}/>
+            <Route path="/register" element = {<RegisterPage/>}/>
+            <Route path="/login" element = {<LoginPage/>}/>
+            <Route element = {<ProtectedRoute/>}>
+              <Route path="/cart" element = {<CartPage/>}/>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </CartProvidor>
     </AuthProvidor>
   )
 }
