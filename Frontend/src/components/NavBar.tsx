@@ -1,34 +1,37 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { useAuth } from "../context/AuthContext";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import React, { useContext, useState } from "react";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const {username ,token} = useAuth()
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] =
+    useState<null | HTMLElement>(null);
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const { username, isAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleOpenUserMenu = (
+    event: React.MouseEvent<HTMLElement>
+  ) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  console.log(`from Navbar : `,{username,token})
 
   return (
     <AppBar position="static">
@@ -43,6 +46,7 @@ function Navbar() {
               width: "100%",
             }}
           >
+            {/* Logo / Website name */}
             <Box
               sx={{
                 display: "flex",
@@ -50,7 +54,8 @@ function Navbar() {
                 alignItems: "center",
               }}
             >
-              <AdbIcon sx={{ display: "flex", mr: 1 }} />
+              <AddIcon sx={{ display: "flex", mr: 1 }} />
+
               <Typography
                 variant="h6"
                 noWrap
@@ -60,39 +65,90 @@ function Navbar() {
                   display: { xs: "none", md: "flex" },
                   fontFamily: "monospace",
                   fontWeight: 700,
+                  color: "inherit",
+                  textDecoration: "none",
                 }}
               >
                 Tech Hub
               </Typography>
             </Box>
+
+            {/* User section */}
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
+              {isAuthenticated ? (
+                <>
+                  <Tooltip title="Open settings">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 3,
+                      }}
+                    >
+                      <Typography>{username}</Typography>
+
+                      <IconButton
+                        onClick={handleOpenUserMenu}
+                        sx={{ p: 0 }}
+                      >
+                        <Avatar
+                          alt={username || ""}
+                          src="/static/images/avatar/2.jpg"
+                        />
+                      </IconButton>
+                    </Box>
+                  </Tooltip>
+
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem
+                      key="profile"
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Typography textAlign="center">
+                        Profile
+                      </Typography>
+                    </MenuItem>
+
+                    <MenuItem
+                      key="logout"
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Typography textAlign="center">
+                        Log Out
+                      </Typography>
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <Button
+                  variant="outlined"
+                  sx={{
+                    backgroundColor: "green",
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  Log In
+                </Button>
+              )}
             </Box>
           </Box>
         </Toolbar>
@@ -100,4 +156,5 @@ function Navbar() {
     </AppBar>
   );
 }
+
 export default Navbar;
