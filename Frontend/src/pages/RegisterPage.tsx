@@ -1,13 +1,16 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import { BASE_URL } from "../constants/BaseUrl";
+import { useAuth } from "../context/AuthContext";
 
 const RegisterPage = () => {
     const [firstName,setFirstName] = useState<string>("");
     const [lastName,setLastName] = useState<string>("");
     const [email,setEmail] = useState<string>("");
     const [password,setPassword] = useState<string>("");
-    const [err,setErr] = useState("")
+    const [err,setErr] = useState("");
+
+    const {login} = useAuth();
 
     const handleSubmit = async () => {
         //handle submit API
@@ -30,8 +33,16 @@ const RegisterPage = () => {
             return;
         }
 
-        const data = Response.json();
-        console.log(data);
+        const token = await Response.json();
+        if (!token) {
+            setErr("Unable to retreive user token");
+            return;
+        }
+        console.log(token);
+
+        login(email,token);
+
+
         setFirstName("");
         setLastName("");
         setEmail("");
