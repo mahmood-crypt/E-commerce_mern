@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { useCart } from "../context/cartContext";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const {
@@ -16,6 +17,8 @@ const CartPage = () => {
     deleteItem,
     deleteCart
   } = useCart();
+
+  const navigate = useNavigate();
 
   const handleQuantity = (productId: string, quantity: number) => {
     if (quantity <= 0) {
@@ -28,8 +31,15 @@ const CartPage = () => {
 
   return (
     <Container fixed sx={{ mt: 2 }}>
-      <Typography variant="h3">My Cart</Typography>
-
+      <Box sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems : "center",
+          justifyContent : "space-between"
+        }} >
+        <Typography variant="h3">My Cart</Typography>
+        <Button onClick={deleteCart} sx={{ display : "flex" , flexDirection : "row" , alignItems : "center" ,gap : 2, color : "red"}}  ><>Clear All Cart</><DeleteIcon /></Button>
+      </Box>
       <Box
         sx={{
           padding: 4,
@@ -87,7 +97,7 @@ const CartPage = () => {
                     onClick={() => deleteItem(item.productId)}
                     sx={{ color: "red" }}
                   >
-                    <DeleteIcon />
+                    Delete item from cart
                   </Button>
                 </Box>
               </Box>
@@ -123,7 +133,9 @@ const CartPage = () => {
           <Typography variant="h4">
             Total Amount: {totalAmount.toFixed(2)} EGP
           </Typography>
-          <Button onClick={deleteCart} sx={{color : "red"}}  >Clear All Cart</Button>
+          <Button onClick={() => {
+            navigate("checkout");
+          }} variant="contained" >Go to checkout</Button>
         </Box>
       </Box>
     </Container>
