@@ -3,12 +3,42 @@ import { useCart } from "../context/cartContext";
 import { ShoppingCart } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import { BASE_URL } from "../constants/BaseUrl";
+import { useAuth } from "../context/AuthContext";
 
 const CheckoutPage = () => {
   const { cartItems, totalAmount } = useCart();
   const navigate = useNavigate();
 
   const addressref = useRef<HTMLInputElement>(null);
+
+  const {token} = useAuth()
+
+  const handleConfirmPayment = async () => {
+    const address = addressref?.current?.value;
+    if(!address){
+        return;
+    }
+
+    const Response = await fetch(`${BASE_URL}/cart/checkout`,{
+                method : "post",
+                headers : {
+                    "Content-Type" : "application/json",
+                    "Authorization" : `Bearer ${token}`
+                },
+                body : JSON.stringify({
+                    "address" : address
+                })
+            });
+    
+            if (!Response.ok) {
+                return;
+            }
+
+            navigate("/order-success")
+    
+
+  }
 
   const renderItems = () => {
     return (
@@ -107,11 +137,11 @@ const CheckoutPage = () => {
           gap : 5          
         }}
       >
-        <TextField sx={{width : "70%"}} inputRef={addressref}  label = "Delivery address" />
+        <TextField  sx={{width : "70%"}} inputRef={addressref}  label = "Delivery address" />
         <Typography variant="h4">
           Total Amount: {totalAmount.toFixed(2)} EGP
         </Typography>
-        <Button variant="contained" sx={{ width : "60%" , backgroundColor : "green"}} >
+        <Button onClick={handleConfirmPayment} variant="contained" sx={{ width : "60%" , backgroundColor : "green"}} >
             confirm payment
         </Button>
       </Box>

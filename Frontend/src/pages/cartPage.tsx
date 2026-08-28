@@ -134,7 +134,7 @@ const CartPage = () => {
             Total Amount: {totalAmount.toFixed(2)} EGP
           </Typography>
           <Button onClick={() => {
-            navigate("checkout");
+            navigate("/checkout");
           }} variant="contained" >Go to checkout</Button>
         </Box>
       </Box>
