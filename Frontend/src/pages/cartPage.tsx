@@ -37,6 +37,8 @@ const CartPage = () => {
     }
 
     console.log({cart});*/
+
+    
     return (
         <Container sx={{mt : 2}}>
             <Typography variant="h3">My Cart</Typography>

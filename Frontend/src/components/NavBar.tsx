@@ -9,16 +9,21 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  SvgIcon,
   Toolbar,
   Tooltip,
   Typography,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import HomeIcon from '@mui/icons-material/Home';
 import { ShoppingCart } from "@mui/icons-material";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/cartContext";
 
 function NavBar() {
+
+  const {cartItems} = useCart()
+
   const [anchorElUser, setAnchorElUser] =
     useState<null | HTMLElement>(null);
 
@@ -49,38 +54,40 @@ function NavBar() {
             }}
           >
             {/* Logo / Website name */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <AddIcon sx={{ display: "flex", mr: 1 }} />
-
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
+            <Button variant="text" sx={{color : "white"}} onClick={() => navigate("/")}>
+              <Box
                 sx={{
-                  mr: 2,
-                  display: { xs: "none", md: "flex" },
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  color: "inherit",
-                  textDecoration: "none",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                Tech Hub
-              </Typography>
-            </Box>
+                <HomeIcon sx={{ display: "flex", mr: 1 }} />
+
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
+                >
+                  Tech Hub
+                </Typography>
+              </Box>
+            </Button>
 
             {/* User section */}
             <Box sx={{ display : "flex", flexDirection : "row" , alignItems : "center" , gap : 3 , flexGrow: 0 }}>
               <IconButton aria-label="cart" onClick={() => {
                 navigate("/cart");
               }}>
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={cartItems.length} color="secondary">
                   <ShoppingCart  sx={{color : "white"}} />
                 </Badge>
               </IconButton>
