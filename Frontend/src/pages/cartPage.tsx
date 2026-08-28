@@ -14,6 +14,7 @@ const CartPage = () => {
     totalAmount,
     updateItemInCart,
     deleteItem,
+    deleteCart
   } = useCart();
 
   const handleQuantity = (productId: string, quantity: number) => {
@@ -118,10 +119,11 @@ const CartPage = () => {
           ))
         )}
 
-        <Box>
+        <Box sx={{ justifyContent : "space-between" , display : "flex", flexDirection : "row" , alignItems : "center"}}>
           <Typography variant="h4">
             Total Amount: {totalAmount.toFixed(2)} EGP
           </Typography>
+          <Button onClick={deleteCart} sx={{color : "red"}}  >Clear All Cart</Button>
         </Box>
       </Box>
     </Container>
