@@ -30,17 +30,19 @@ const CartProvidor: FC<PropsWithChildren> = ({ children }) => {
 
 
       const cartItemsMapped = cart.items.map(
-        ({ product, quantity }: { product: any; quantity: number }) => ({
+        ({ product, quantity , unitPrice }: { product: any; unitPrice : number ; quantity: number }) => ({
           productId: product._id,
           title: product.title,
           image: product.image,
-          unitPrice: product.unitPrice,
+          unitPrice,
+          quantity 
         }),
       );
 
 
 
       setCartItems(cartItemsMapped);
+      setTotalAmount(cart.totalAmount)
     };
     FetchCart();
   }, [token]);
@@ -72,11 +74,12 @@ const CartProvidor: FC<PropsWithChildren> = ({ children }) => {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const cartItemsMapped = cart.items.map(
-        ({ product, quantity }: { product: any; quantity: number }) => ({
+        ({ product, quantity , unitPrice }: { product: any; unitPrice : number ; quantity: number }) => ({
           productId: product._id,
           title: product.title,
           image: product.image,
-          unitPrice: product.unitPrice,
+          quantity,
+          unitPrice 
         }),
       );
 

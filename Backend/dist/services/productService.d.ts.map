@@ -1,1 +1,1 @@
-{"version":3,"file":"productService.d.ts","sourceRoot":"","sources":["../../src/services/productService.ts"],"names":[],"mappings":"AAEA,eAAO,MAAM,cAAc;;;;;;KAE1B,CAAA;AAED,eAAO,MAAM,mBAAmB,qBAqB/B,CAAA"}
+{"version":3,"file":"productService.d.ts","sourceRoot":"","sources":["../../src/services/productService.ts"],"names":[],"mappings":"AAEA,eAAO,MAAM,cAAc;;;;;;KAE1B,CAAA;AAED,eAAO,MAAM,mBAAmB,qBAsB/B,CAAA"}
