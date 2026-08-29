@@ -1,6 +1,7 @@
 import { userModel } from "../models/usermodel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { orderModel } from "../models/ordermodel.js";
 //functions
 const generateJWT = (data) => {
     return jwt.sign(data, process.env.JWT_SECRET || "");
@@ -25,5 +26,8 @@ export const login = async ({ email, password }) => {
         return { data: generateJWT({ email: findUser.email, firstName: findUser.firstName, lastName: findUser.lastName }), statusCode: 200 };
     }
     return { data: "Incorrect Email or  Password", statusCode: 400 };
+};
+export const getAllOrders = async (userId) => {
+    return { data: await orderModel.find({ userId }), statusCode: 200 };
 };
 //# sourceMappingURL=userService.js.map

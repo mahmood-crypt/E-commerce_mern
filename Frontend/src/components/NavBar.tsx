@@ -14,25 +14,21 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
 import { ShoppingCart } from "@mui/icons-material";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cartContext";
 
 function NavBar() {
+  const { cartItems } = useCart();
 
-  const {cartItems} = useCart()
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const [anchorElUser, setAnchorElUser] =
-    useState<null | HTMLElement>(null);
-
-  const { username, isAuthenticated,logout } = useContext(AuthContext);
+  const { username, isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleOpenUserMenu = (
-    event: React.MouseEvent<HTMLElement>
-  ) => {
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -54,7 +50,11 @@ function NavBar() {
             }}
           >
             {/* Logo / Website name */}
-            <Button variant="text" sx={{color : "white"}} onClick={() => navigate("/")}>
+            <Button
+              variant="text"
+              sx={{ color: "white" }}
+              onClick={() => navigate("/")}
+            >
               <Box
                 sx={{
                   display: "flex",
@@ -83,12 +83,23 @@ function NavBar() {
             </Button>
 
             {/* User section */}
-            <Box sx={{ display : "flex", flexDirection : "row" , alignItems : "center" , gap : 3 , flexGrow: 0 }}>
-              <IconButton aria-label="cart" onClick={() => {
-                navigate("/cart");
-              }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 3,
+                flexGrow: 0,
+              }}
+            >
+              <IconButton
+                aria-label="cart"
+                onClick={() => {
+                  navigate("/cart");
+                }}
+              >
                 <Badge badgeContent={cartItems.length} color="secondary">
-                  <ShoppingCart  sx={{color : "white"}} />
+                  <ShoppingCart sx={{ color: "white" }} />
                 </Badge>
               </IconButton>
 
@@ -105,10 +116,7 @@ function NavBar() {
                     >
                       <Typography>{username}</Typography>
 
-                      <IconButton
-                        onClick={handleOpenUserMenu}
-                        sx={{ p: 0 }}
-                      >
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar
                           alt={username || ""}
                           src="/static/images/avatar/2.jpg"
@@ -135,10 +143,13 @@ function NavBar() {
                   >
                     <MenuItem
                       key="profile"
-                      onClick={handleCloseUserMenu}
+                      onClick={() => {
+                        navigate("/my-orders");
+                        handleCloseUserMenu();
+                      }}
                     >
-                      <Typography textAlign="center">
-                        Profile
+                      <Typography on textAlign="center">
+                        My Orders
                       </Typography>
                     </MenuItem>
 
@@ -147,12 +158,10 @@ function NavBar() {
                       onClick={() => {
                         logout();
                         navigate("/");
-                        handleCloseUserMenu()
+                        handleCloseUserMenu();
                       }}
                     >
-                      <Typography textAlign="center">
-                        Log Out
-                      </Typography>
+                      <Typography textAlign="center">Log Out</Typography>
                     </MenuItem>
                   </Menu>
                 </>
